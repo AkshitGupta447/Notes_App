@@ -1,0 +1,11 @@
+// EJS
+
+<button 
+    id="delete-button" 
+    onclick="SendSignal(this)"  
+    data-id="<%= notes._id %>"  
+>Delete</button> 
+
+// (this) represents this button as we have list and hence each button is seprate
+// on click call this JS Function from script
+// attribute of this button, ID of notes is send as attribute to access that particular note in backend

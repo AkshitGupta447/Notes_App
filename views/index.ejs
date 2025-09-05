@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Notes</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <h1>Welcome, <%= notes.length > 0 ? notes[0].userId.username : "User" %>!</h1>
+  
+  <h2>Your Notes:</h2>
+  <ul>
+    <% if (notes && notes.length > 0) { %>
+      <% notes.forEach(note => { %>
+      
+        <li id="note-<%= note._id %>">
+          <strong class="titleejs"><%= note.title %></strong>
+          <br> 
+          <small class="textejs"><%= note.text %> </small> 
+          <br>
+          <small>Created by: <%= note.userId.username %></small>
+
+          <button onclick="SendUpdateSignal(this)"  
+            data-id="<%= note._id %>"
+            data-title="<%= note.title %>"
+            data-text="<%= note.text%>"
+            >Update</button>
+
+          <button onclick="SendSignal(this)"  data-id=<%= note._id %>> Delete </button>
+
+        </li>
+        
+      <% }) %>
+    <% } else { %>
+      <li>No notes yet. Add one!</li>
+    <% } %>
+  </ul>
+
+  <h2>Add a Note:</h2>
+  <form action="/notes" method="POST">
+    <input type="text" name="title" placeholder="Title" required>
+    <br>
+    <textarea name="text" placeholder="Your note..." required></textarea>
+    <br>  
+    <button type="submit">Add Note</button>
+  </form>
+
+  <div id="updateFormContainer" style="display: none; margin-top: 20px;">
+    <form id="updateform" onsubmit="submitUpdate(event)">
+      <input type="hidden" id="noteid">
+      <input type="text" id="updatetitle">
+      <textarea type="text" id="updatetext"></textarea>
+      <button type="submit">Save</button>
+    </form>
+  </div>
+
+  <script src="/assets/script.js"></script>
+</body>
+</html>
